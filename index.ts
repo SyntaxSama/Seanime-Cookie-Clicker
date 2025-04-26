@@ -1,10 +1,6 @@
 /// <reference path="./onlinestream-provider.d.ts" />
 /// <reference path="./core.d.ts" />
 
-// Video type should be m3u8 based on 2anime player
-
-declare type VideoSourceType = "mp4" | "m3u8";
-
 class Provider {
   api = "https://animeapi.skin";
 
@@ -75,6 +71,8 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
+    declare type VideoSourceType = "m3u8";
+    
     const result: EpisodeServer = {
       videoSources: [],
       server: "default",
