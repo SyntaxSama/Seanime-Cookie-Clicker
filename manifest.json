@@ -1,0 +1,12 @@
+{
+    "id": "my-original-extension-id",
+    "name": "My Extension Name",
+    "description": "My Extension Description",
+    "manifestURI": "https://github.com/SyntaxSama/test/blob/main/manifest.json",
+    "version": "1.0.0",
+    "author": "SyntaxSama",
+    "type": "onlinestream-provider",
+    "language": "TypeScript",
+    "lang": "JP",
+    "payloadURI": "https://github.com/SyntaxSama/test/blob/main/index.ts"
+}
