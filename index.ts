@@ -6,7 +6,7 @@ class Provider {
 
   getSettings(): Settings {
     return {
-      episodeServers: [],
+      episodeServers: ["2anime", "default"],
       supportsDub: true,
     };
   }
@@ -71,7 +71,7 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
-    declare type VideoSourceType = "mp4" | "m3u8";
+    declare type VideoSourceType = "m3u8";
 
     declare type VideoSource = {
       url: string
@@ -81,7 +81,7 @@ class Provider {
     }
     
     const result: EpisodeServer = {
-      videoSources: [],
+      videoSources: ["2anime", "default"],
       server: "default",
       headers: { Referer: this.api },
     };
