@@ -1,10 +1,6 @@
 /// <reference path="./onlinestream-provider.d.ts" />
 /// <reference path="./core.d.ts" />
 
-// Video type should be m3u8 based on 2anime player
-
-declare type VideoSourceType = "mp4" | "m3u8";
-
 class Provider {
   api = "https://animeapi.skin";
 
@@ -75,6 +71,7 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
+    declare type VideoSourceType = "mp4" | "m3u8";
     const result: EpisodeServer = {
       videoSources: [],
       server: "default",
@@ -96,7 +93,6 @@ class Provider {
         throw new Error("No packed script found in embed.");
       }
 
-      // Try to eval inside a safer context
       const m3u8Match = scriptContent.match(/file\s*:\s*"(https?:\\/\\/[^\"]+\.m3u8)"/);
 
       if (m3u8Match && m3u8Match[1]) {
