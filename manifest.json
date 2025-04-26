@@ -1,12 +1,12 @@
 {
-    "id": "my-original-extension-id",
-    "name": "My Extension Name",
-    "description": "My Extension Description",
+    "id": "animeapi-skin",
+    "name": "AnimeAPI",
+    "description": "Stream anime from animeapi.skin",
     "manifestURI": "https://github.com/SyntaxSama/test/blob/main/manifest.json",
     "version": "1.0.0",
     "author": "SyntaxSama",
     "type": "onlinestream-provider",
     "language": "TypeScript",
     "lang": "JP",
-    "payloadURI": "https://github.com/SyntaxSama/test/blob/main/index.ts"
+    "payload": "/// <reference path=\"./onlinestream-provider.d.ts\" />\n/// <reference path=\"./core.d.ts\" />\n\nclass Provider {\n  api = \"https://animeapi.skin\";\n\n  getSettings(): Settings {\n    return {\n      episodeServers: [\"default\"],\n      supportsDub: true,\n    };\n  }\n\n  async search(opts: SearchOptions): Promise<SearchResult[]> {\n    const query = encodeURIComponent(opts.query.trim());\n    const url = `${this.api}/search?q=${query}`;\n\n    try {\n      const res = await fetch(url);\n      const data = await res.json();\n      const results: SearchResult[] = [];\n\n      if (!data || !Array.isArray(data)) {\n        return [];\n      }\n\n      for (const item of data) {\n        results.push({\n          id: item.title,\n          title: item.title,\n          url: item.embed_url,\n          subOrDub: \"sub\",\n        });\n      }\n\n      return results;\n    } catch (err) {\n      console.error(\"Search error:\", err);\n      return [];\n    }\n  }\n\n  async findEpisodes(id: string): Promise<EpisodeDetails[]> {\n    const title = encodeURIComponent(id.trim());\n    const url = `${this.api}/episodes?title=${title}`;\n\n    try {\n      const res = await fetch(url);\n      const data = await res.json();\n      const episodes: EpisodeDetails[] = [];\n\n      if (!data || !Array.isArray(data)) {\n        return [];\n      }\n\n      for (let i = 0; i < data.length; i++) {\n        const ep = data[i];\n        episodes.push({\n          id: ep.link_url,\n          number: parseInt(ep.episode) || i + 1,\n          title: `Episode ${ep.episode}`,\n          url: ep.embed_url,\n        });\n      }\n\n      return episodes;\n    } catch (err) {\n      console.error(\"Find episodes error:\", err);\n      return [];\n    }\n  }\n\n  async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {\n    const result: EpisodeServer = {\n      videoSources: [],\n      server: \"default\",\n      headers: { Referer: this.api },\n    };\n\n    result.videoSources.push({\n      url: episode.url,\n      type: \"embed\",\n      quality: \"default\",\n      subtitles: [],\n    });\n\n    return result;\n  }\n}\n\nconst provider = new Provider();"
 }
