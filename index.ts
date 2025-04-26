@@ -1,12 +1,16 @@
 /// <reference path="./onlinestream-provider.d.ts" />
 /// <reference path="./core.d.ts" />
 
+// Video type should be m3u8 based on 2anime player
+
+declare type VideoSourceType = "mp4" | "m3u8";
+
 class Provider {
   api = "https://animeapi.skin";
 
   getSettings(): Settings {
     return {
-      episodeServers: ["2anime", "default"],
+      episodeServers: ["default"],
       supportsDub: true,
     };
   }
@@ -26,9 +30,9 @@ class Provider {
 
       for (const item of data) {
         results.push({
-          id: item.title, 
+          id: item.title,
           title: item.title,
-          url: item.embed_url, 
+          url: item.embed_url,
           subOrDub: "sub",
         });
       }
@@ -56,10 +60,10 @@ class Provider {
       for (let i = 0; i < data.length; i++) {
         const ep = data[i];
         episodes.push({
-          id: ep.link_url, 
+          id: ep.link_url,
           number: parseInt(ep.episode) || i + 1,
           title: `Episode ${ep.episode}`,
-          url: ep.embed_url, 
+          url: ep.embed_url,
         });
       }
 
@@ -71,24 +75,15 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
-    declare type VideoSourceType = "m3u8";
-
-    declare type VideoSource = {
-      url: string
-      type: VideoSourceType
-      quality: string
-      subtitles: VideoSubtitle[]
-    }
-    
     const result: EpisodeServer = {
-      videoSources: ["2anime", "default"],
+      videoSources: [],
       server: "default",
       headers: { Referer: this.api },
     };
 
     result.videoSources.push({
       url: episode.url,
-      type: "embed",
+      type: "m3u8",
       quality: "default",
       subtitles: [],
     });
