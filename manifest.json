@@ -2,7 +2,7 @@
     "id": "animeapi-skin",
     "name": "AnimeAPI",
     "description": "Stream anime from animeapi.skin",
-    "manifestURI": "https://github.com/SyntaxSama/test/blob/main/manifest.json",
+    "manifestURI": "https://raw.githubusercontent.com/SyntaxSama/test/refs/heads/main/manifest.json",
     "version": "1.0.0",
     "author": "SyntaxSama",
     "type": "onlinestream-provider",
