@@ -1,12 +1,16 @@
 /// <reference path="./onlinestream-provider.d.ts" />
 /// <reference path="./core.d.ts" />
 
+// Video type should be m3u8 based on 2anime player
+
+declare type VideoSourceType = "mp4" | "m3u8";
+
 class Provider {
   api = "https://animeapi.skin";
 
   getSettings(): Settings {
     return {
-      episodeServers: ["2anime"],
+      episodeServers: ["default"],
       supportsDub: true,
     };
   }
@@ -71,22 +75,54 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
-    declare type VideoSourceType = "m3u8";
-    
     const result: EpisodeServer = {
       videoSources: [],
-      server: "2anime",
-      headers: { Referer: this.api },
+      server: "default",
+      headers: { Referer: "https://2anime.xyz" },
     };
 
-    result.videoSources.push({
-      url: episode.url,
-      type: "m3u8",
-      quality: "default",
-      subtitles: [],
-    });
+    try {
+      const res = await fetch(episode.url);
+      const html = await res.text();
+      const doc = LoadDoc(html);
 
-    return result;
+      const scriptTag = doc('script').filter((_, el) => {
+        return el.text().includes("eval(");
+      }).first();
+
+      const scriptContent = scriptTag.text();
+
+      if (!scriptContent) {
+        throw new Error("No packed script found in embed.");
+      }
+
+      // Try to eval inside a safer context
+      const m3u8Match = scriptContent.match(/file\s*:\s*"(https?:\\/\\/[^\"]+\.m3u8)"/);
+
+      if (m3u8Match && m3u8Match[1]) {
+        const videoUrl = m3u8Match[1].replace(/\\/g, "");
+
+        result.videoSources.push({
+          url: videoUrl,
+          type: "m3u8",
+          quality: "default",
+          subtitles: [],
+        });
+      } else {
+        console.warn("Failed to extract m3u8 link, fallback to iframe.");
+        result.videoSources.push({
+          url: episode.url,
+          type: "m3u8",
+          quality: "default",
+          subtitles: [],
+        });
+      }
+
+      return result;
+    } catch (err) {
+      console.error("Find server error:", err);
+      throw new Error("Failed to load episode stream.");
+    }
   }
 }
 
