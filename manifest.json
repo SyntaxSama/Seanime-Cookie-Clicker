@@ -8,5 +8,5 @@
     "type": "onlinestream-provider",
     "language": "typescript",
     "lang": "JP",
-    "payloadURI": "https://github.com/SyntaxSama/test/blob/main/index.ts"
+    "payloadURI": "https://raw.githubusercontent.com/SyntaxSama/test/refs/heads/main/index.ts"
 }
