@@ -71,6 +71,8 @@ class Provider {
   }
 
   async findEpisodeServer(episode: EpisodeDetails, server: string): Promise<EpisodeServer> {
+    declare type VideoSourceType = "mp4" | "m3u8";
+    
     const result: EpisodeServer = {
       videoSources: [],
       server: "default",
