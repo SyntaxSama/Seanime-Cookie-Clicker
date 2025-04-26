@@ -6,7 +6,7 @@ class Provider {
 
   getSettings(): Settings {
     return {
-      episodeServers: ["default"],
+      episodeServers: ["2anime"],
       supportsDub: true,
     };
   }
@@ -75,7 +75,7 @@ class Provider {
     
     const result: EpisodeServer = {
       videoSources: [],
-      server: "default",
+      server: "2anime",
       headers: { Referer: this.api },
     };
 
