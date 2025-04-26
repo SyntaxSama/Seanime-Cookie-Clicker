@@ -6,7 +6,7 @@ class Provider {
 
   getSettings(): Settings {
     return {
-      episodeServers: ["default"],
+      episodeServers: [],
       supportsDub: true,
     };
   }
