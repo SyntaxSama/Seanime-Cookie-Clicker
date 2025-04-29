@@ -1,0 +1,21 @@
+{
+    "id": "cookie-clicker",
+    "name": "Cookie Clicker",
+    "version": "1.0.0",
+    "manifestURI": "",
+    "language": "typescript",
+    "type": "plugin",
+    "description": "A cookie clicker tray based plugin",
+    "author": "SyntaxSama",
+    "icon": "",
+    "website": "",
+    "lang": "EN",
+    "payloadURI": "/Users/syntaxsama/Desktop/Seanime Plugins/cookie-clicker.ts",
+    "plugin": {
+        "version": "1",
+        "permissions": {
+            "scopes": ["storage"]
+        }
+    },
+    "isDevelopment": true
+}
