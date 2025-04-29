@@ -2,7 +2,7 @@
     "id": "cookie-clicker",
     "name": "Cookie Clicker",
     "version": "1.0.0",
-    "manifestURI": "",
+    "manifestURI": "https://raw.githubusercontent.com/SyntaxSama/Seanime-Cookie-Clicker/refs/heads/main/manifest.json",
     "language": "typescript",
     "type": "plugin",
     "description": "A cookie clicker tray based plugin",
@@ -10,7 +10,7 @@
     "icon": "",
     "website": "",
     "lang": "EN",
-    "payloadURI": "/Users/syntaxsama/Desktop/Seanime Plugins/cookie-clicker.ts",
+    "payloadURI": "https://raw.githubusercontent.com/SyntaxSama/Seanime-Cookie-Clicker/refs/heads/main/cookie-clicker.ts",
     "plugin": {
         "version": "1",
         "permissions": {
